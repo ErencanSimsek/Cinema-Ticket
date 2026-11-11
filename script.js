@@ -1,24 +1,21 @@
-const seats = document.querySelectorAll('.seat')
-const movies=document.querySelectorAll('#movie')
-const count=document.getElementById('count')
-const amount = document.querySelector('#amount')
+const container = document.querySelector('.container')
+const count = document.getElementById('count')
+const amount=document.getElementById('amount')
+const movie=document.getElementById('movie')
 
-let countNumber=0;
-let amountNumber=0
-let movieBuy=20
+container.addEventListener('click',function(e){
+    if(e.target.classList.contains('seat')&&!e.target.classList.contains('reserved')){
+        e.target.classList.toggle('selected')
+        onTotal()
+    }
+})
 
-for(let movie of movies){
-    movie.addEventListener('click',function(){
-        movieBuy=movie.value
-        amount.innerHTML=`${movieBuy*countNumber}`
-    })
-}
+movie.addEventListener('click',function(e){
+    onTotal()
+})
 
-for(let seat of seats){
-    seat.addEventListener('click',function(event) {
-        seat.className='seat selected'
-        count.innerHTML=`${countNumber+=1}`
-        amount.innerHTML=`${movieBuy*countNumber}`
-        event.preventDefault();
-    })
+function onTotal() {
+    let selected = container.querySelectorAll('.seat.selected').length
+    count.innerText=selected
+    amount.innerText=selected*movie.value
 }
